@@ -43,6 +43,16 @@ vol_type=$($VOL_TYPE $filesystem_dev)
 
 if [ "${vol_type:0:3}" = "ext" ]; then
   dump -0 -q -f - "$filesystem_dev"
+elif [ "$vol_type" = "xfs" ]; then
+  TMPDIR="$(mktemp -d)"
+  if ! [ -d "$TMPDIR" ]; then
+    echo "Can't create temporary directory!" >&2
+    exit 1
+  fi
+  CLEANUP+=("rmdir $TMPDIR")
+  mount "$filesystem_dev" "$TMPDIR"
+  CLEANUP+=("umount $filesystem_dev")
+  xfsdump -l 0 -F -J -f - "$TMPDIR"
 else
   echo "Can't dump partition of type ${vol_type}!" >&2
   exit 1

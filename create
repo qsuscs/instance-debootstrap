@@ -60,7 +60,23 @@ else
   exit 1
 fi
 
-mke2fs -Fjqt $OSP_FILESYSTEM $filesystem_dev
+case $OSP_FILESYSTEM in
+  ext[234])
+    mkfs_args="-Fjqt $OSP_FILESYSTEM"
+    mkfs=mke2fs
+    ;;
+  xfs)
+    mkfs_args="-qf"
+    mkfs=mkfs.xfs
+    [ -n $EXTRA_PROGS ] && EXTRA_PROGS+=","
+    EXTRA_PROGS+="xfsprogs"
+    ;;
+  *)
+    echo "Unknown file system $OSP_FILESYSTEM" 1>&2
+    exit 1
+esac
+
+$mkfs "$mkfs_args" $filesystem_dev
 root_uuid=$($VOL_ID $filesystem_dev )
 
 if [ -n "$swapdev" ]; then
