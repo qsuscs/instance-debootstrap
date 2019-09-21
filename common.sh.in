@@ -156,6 +156,7 @@ fi
 : ${SUITE:="jessie"}
 : ${ARCH:=""}
 : ${EXTRA_PKGS:=""}
+: ${WITHOUT_PKGS:=""}
 : ${COMPONENTS:=""}
 : ${CUSTOMIZE_DIR:="@sysconfdir@/ganeti/instance-debootstrap/hooks"}
 : ${VARIANTS_DIR:="@sysconfdir@/ganeti/instance-debootstrap/variants"}

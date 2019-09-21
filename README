@@ -156,6 +156,7 @@ SUITE: suite installed by debootstrap (eg: wheezy)
 ARCH: target architecture
 PARTITION_STYLE: style of the disk partitioning (see above)
 EXTRA_PKGS: extra packages installed by debootstrap
+WITHOUT_PKGS: packages to exclude from default debootstrap set
 BLOCKDEV: ganeti block device
 FSYSDEV: device in which the filesystem resides (the one mounted in TARGET)
 

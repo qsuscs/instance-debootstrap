@@ -92,6 +92,7 @@ else
   # INCLUDE will be empty if EXTRA_PKGS is null/empty, otherwise we
   # build the full parameter format from it
   INCLUDE=${EXTRA_PKGS:+"--include=$EXTRA_PKGS"}
+  EXCLUDE=${WITHOUT_PKGS:+"--exclude=$WITHOUT_PKGS"}
   COMP=${COMPONENTS:+"--components=$COMPONENTS"}
   debootstrap \
     --arch "$DPKG_ARCH" \
@@ -186,7 +187,7 @@ if [ -n "$RUN_PARTS" -a -n "$CUSTOMIZE_DIR" -a -d "$CUSTOMIZE_DIR" ]; then
   TARGET=$TMPDIR
   BLOCKDEV=$blockdev
   FSYSDEV=$filesystem_dev
-  export TARGET SUITE ARCH PARTITION_STYLE EXTRA_PKGS BLOCKDEV FSYSDEV
+  export TARGET SUITE ARCH PARTITION_STYLE EXTRA_PKGS WITHOUT_PKGS BLOCKDEV FSYSDEV
   $RUN_PARTS $CUSTOMIZE_DIR
 fi
 
