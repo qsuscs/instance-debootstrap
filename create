@@ -154,6 +154,9 @@ if [ -n "$SERIAL_PORT" ]; then
   if [ -e $TMPDIR/etc/inittab ]; then
     # debian
     echo "T0:23:respawn:/sbin/getty $SERIAL_PORT 38400" >> $TMPDIR/etc/inittab
+  elif [ -e $TMPDIR/lib/systemd/system/serial-getty@.service ]; then
+    # systemd
+    chroot $TMPDIR systemctl enable serial-getty@$SERIAL_PORT.service
   elif [ -e $TMPDIR/etc/init ]; then
     # ubuntu (eg. karmic)
     cat > $TMPDIR/etc/init/${SERIAL_PORT}.conf <<EOF
